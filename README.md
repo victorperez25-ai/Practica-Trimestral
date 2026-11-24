@@ -103,7 +103,7 @@ _Añadir al menos cuatro capturas (listado, formulario, consulta a la API e inte
 
 ## Uso de IA
 
-Enlace al chat de IA utilizado: _añadir enlace_
+Enlace al chat de IA utilizado: https://gemini.google.com/app/5f62c36144c3ab2f?utm_source=app_launcher&utm_medium=owned&utm_campaign=base_all&pli=1 
 
 ## Incidencias conocidas
 
