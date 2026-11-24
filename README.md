@@ -68,43 +68,67 @@ Permisos: solo `INTERNET`.
 
 ## Emuladores utilizados
 
-| Emulador | Dispositivo | Pantalla | API |
-|---|---|---|---|
-| 1 (compacto) | _p. ej. Pixel 7_ | _6,3" — 1080×2400_ | _API 3x_ |
-| 2 (grande) | _p. ej. Pixel Tablet_ | _10,95" — 2560×1600_ | _API 3x_ |
+| Emulador | Perfil | Resolución | Densidad | RAM | Sistema |
+|---|---|---|---|---|---|
+| 1 (pantalla compacta) | Medium Phone | 1080×2400 (vertical) | 420 dpi | 2 GB | Android API 37, Google Play, x86_64 |
+| 2 (pantalla grande) | Medium Tablet | 2560×1600 (horizontal) | 320 dpi | ~1,9 GB | Android 16 (API 36), Google Play, x86_64 |
 
 ## Pruebas realizadas
 
-| Nº | Prueba | Resultado esperado | Resultado obtenido |
-|---|---|---|---|
-| 1 | Crear una tarea válida | Se guarda y aparece en la lista | _pendiente_ |
-| 2 | Intentar guardar un título vacío | Error y no se crea la tarea | _pendiente_ |
-| 3 | Editar una tarea | Los cambios se muestran | _pendiente_ |
-| 4 | Marcar una tarea como completada | Cambia su estado y se guarda | _pendiente_ |
-| 5 | Cancelar una eliminación | La tarea no desaparece | _pendiente_ |
-| 6 | Eliminar confirmando | La tarea desaparece de la base de datos | _pendiente_ |
-| 7 | Cerrar y volver a abrir | Se recuperan las tareas | _pendiente_ |
-| 8 | Activar el filtro y reiniciar | Se conserva la preferencia | _pendiente_ |
-| 9 | Consultar la API con Internet | Se muestran las tareas recibidas | _pendiente_ |
-| 10 | Consultar la API sin conexión | Error y botón Reintentar | _pendiente_ |
-| 11 | Compartir una tarea | Se abre el selector de aplicaciones | _pendiente_ |
-| 12 | Cambiar la orientación | La app sigue funcionando y conserva los datos | _pendiente_ |
+Todas las pruebas se realizaron en los dos emuladores. Para cerrar la app se forzó su detención (`am force-stop`) y se volvió a abrir; la falta de conexión se simuló con el modo avión.
+
+| Nº | Prueba | Resultado esperado | Móvil | Tablet | Observaciones |
+|---|---|---|---|---|---|
+| 1 | Crear una tarea válida | Se guarda y aparece en la lista | ✅ | ✅ | Los espacios exteriores del título se eliminan al guardar |
+| 2 | Intentar guardar un título vacío | Error y no se crea la tarea | ✅ | ✅ | También probado con título de solo espacios («El título es obligatorio») y con 2 caracteres («al menos 3 caracteres»). Sin prioridad aparece «Selecciona una prioridad» |
+| 3 | Editar una tarea | Los cambios se muestran | ✅ | ✅ | El formulario se abre con los datos actuales; se cambiaron título y prioridad |
+| 4 | Marcar una tarea como completada | Cambia su estado y se guarda | ✅ | ✅ | El título aparece tachado y el estado pasa a «Completada»; se mantiene tras reiniciar |
+| 5 | Cancelar una eliminación | La tarea no desaparece | ✅ | ✅ | |
+| 6 | Eliminar confirmando | La tarea desaparece de la base de datos | ✅ | ✅ | Tras reiniciar la app sigue sin aparecer |
+| 7 | Cerrar y volver a abrir | Se recuperan las tareas | ✅ | ✅ | |
+| 8 | Activar el filtro y reiniciar | Se conserva la preferencia | ✅ | ✅ | El Switch sigue activado y solo se ven las pendientes |
+| 9 | Consultar la API con Internet | Se muestran las tareas recibidas | ✅ | ✅ | 20 tareas con id, título y estado. Durante la carga se ve el indicador y el botón queda deshabilitado |
+| 10 | Consultar la API sin conexión | Error y botón Reintentar | ✅ | ✅ | Al recuperar la conexión, «Reintentar» carga las tareas |
+| 11 | Compartir una tarea | Se abre el selector de aplicaciones | ✅ | ✅ | El texto incluye título, descripción y prioridad |
+| 12 | Cambiar la orientación | La app sigue funcionando y conserva los datos | ✅ | ✅ | Probado en la lista y en mitad del formulario: el texto escrito se conserva |
+
+Prueba adicional: pulsar «Guardar» tres veces seguidas muy rápido crea una sola tarea (sin duplicados).
 
 ## Capturas de pantalla
 
-_Añadir al menos cuatro capturas (listado, formulario, consulta a la API e interacción relevante), por ejemplo en una carpeta `capturas/`:_
+### Móvil (Medium Phone)
 
-```
-![Listado](capturas/listado.png)
-![Formulario](capturas/formulario.png)
-![API](capturas/api.png)
-![Eliminar](capturas/eliminar.png)
-```
+| Listado vacío | Validación | Selector de prioridad | Formulario relleno |
+|---|---|---|---|
+| ![](capturas/01_lista_vacia.png) | ![](capturas/02_validacion_titulo_vacio.png) | ![](capturas/03_selector_prioridad.png) | ![](capturas/04_formulario_relleno.png) |
+
+| Editar tarea | Tarea completada | Confirmar eliminación | Filtro «solo pendientes» |
+|---|---|---|---|
+| ![](capturas/05_editar_tarea_antes.png) | ![](capturas/06_tarea_completada.png) | ![](capturas/07_dialogo_eliminar.png) | ![](capturas/08_filtro_solo_pendientes.png) |
+
+| Tras reiniciar | Compartir | API: cargando | API: resultados | API: sin conexión |
+|---|---|---|---|---|
+| ![](capturas/09_tareas_tras_reiniciar.png) | ![](capturas/10_compartir_selector.png) | ![](capturas/16_api_cargando.png) | ![](capturas/14_api_resultados.png) | ![](capturas/15_api_sin_conexion.png) |
+
+Orientación horizontal:
+
+![Lista en horizontal](capturas/11_horizontal_lista.png)
+![Formulario en horizontal](capturas/12_horizontal_formulario.png)
+
+### Tablet (Medium Tablet)
+
+![Lista en tablet](capturas/tablet/04_lista_con_tareas.png)
+![Validación en tablet](capturas/tablet/02_validacion.png)
+![API en tablet](capturas/tablet/09_api_resultados.png)
+![Sin conexión en tablet](capturas/tablet/10_api_sin_conexion.png)
+![Compartir en tablet](capturas/tablet/07_compartir.png)
+![Tablet en vertical](capturas/tablet/08_vertical.png)
 
 ## Uso de IA
 
-Enlace al chat de IA utilizado: https://gemini.google.com/app/5f62c36144c3ab2f?utm_source=app_launcher&utm_medium=owned&utm_campaign=base_all&pli=1 
+Enlace al chat de IA utilizado: _añadir enlace_
 
 ## Incidencias conocidas
 
 - Los resultados de la consulta a la API no se guardan al girar el dispositivo (son datos de ejemplo y no se persisten); basta con volver a pulsar el botón de carga. Las tareas personales y el filtro sí se conservan.
+- En el móvil en horizontal, el botón flotante «Nueva tarea» puede tapar parcialmente el icono de eliminar de la segunda tarea visible, porque la pantalla es muy baja. Si hay suficientes tareas para desplazar la lista, el margen inferior permite dejarlo a la vista; en vertical y en la tablet no ocurre.
